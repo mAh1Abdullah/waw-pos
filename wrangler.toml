@@ -1,0 +1,10 @@
+# required for database drivers to function
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2024-09-23"
+
+
+[[ d1_databases ]]
+binding = "DB"
+database_name = "waw-pos"
+database_id = "f09c3a46-4305-449f-93f8-c4259ec451f4"
+migrations_dir = "drizzle/migrations"
