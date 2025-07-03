@@ -4,6 +4,8 @@ import { Product } from '@/lib/db/products';
 import { removeProduct } from '@/lib/actions/products';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 
 interface ProductTableProps {
   products: Product[];
@@ -26,43 +28,43 @@ export default function ProductTable({ products, onEdit }: ProductTableProps) {
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Product List</h2>
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Product List</h2>
       {error && (
         <div className="mb-4 p-3 rounded bg-red-100 text-red-700">
           {error}
         </div>
       )}
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Price</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Selling Price</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reorder Level</th>
-              <th scope="col" className="relative px-6 py-3"><span className="sr-only">Actions</span></th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</TableHead>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">SKU</TableHead>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Unit Price</TableHead>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Selling Price</TableHead>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Stock</TableHead>
+              <TableHead className="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Reorder Level</TableHead>
+              <TableHead className="relative"><span className="sr-only">Actions</span></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {products.map((product) => (
-              <tr key={product.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.sku}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.unitPrice}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.sellingPrice}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.currentStock}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.reorderLevel}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button onClick={() => onEdit(product)} className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                  <button onClick={() => handleDelete(product.id)} className="text-red-600 hover:text-red-900">Delete</button>
-                </td>
-              </tr>
+              <TableRow key={product.id}>
+                <TableCell className="font-medium">{product.name}</TableCell>
+                <TableCell>{product.sku}</TableCell>
+                <TableCell>{product.unitPrice}</TableCell>
+                <TableCell>{product.sellingPrice}</TableCell>
+                <TableCell>{product.currentStock}</TableCell>
+                <TableCell>{product.reorderLevel}</TableCell>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="sm" onClick={() => onEdit(product)} className="mr-2">Edit</Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDelete(product.id)}>Delete</Button>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
